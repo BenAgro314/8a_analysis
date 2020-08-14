@@ -3,97 +3,14 @@ from prettytable import PrettyTable
 from bs4 import BeautifulSoup as bs
 from multiprocessing import Pool
 from multiprocessing import Manager
-#import concurrent.futures
 from color_text import *
 import json
 import requests
 import re
 
-#MAX_THREADS = 30
-
-
-'''
-f = open('climbs.csv','w')
-
-
 front ='https://www.8a.nu' 
 
-def process_entry(URL, page_num = 1):
-
-    page = requests.get(URL)
-    soup = bs(page.content, 'html.parser')
-    print(color_text("page number:" + str(page_num), [255,255,0]))
-
-    tag = soup.tbody
-    entries = tag.find_all('tr')
-
-    p = PrettyTable(['grade', 'name', 'ascents', 'f/os ratio'])
-
-    for entry in entries:
-        grade = entry.find(class_ = 'col-grade').text.strip()
-        name = entry.find(class_ = 'col-name').find(class_ = 'name-link').text.strip()
-        ascents = entry.find(class_ = 'col-ascents number').text.strip()
-        ratio = entry.find(class_ = re.compile('col-ratio')).text.strip()[:-2]
-        recommended = entry.find(class_ = re.compile('col-recommend')).text.strip()[:-2]
-        stars = entry.find(class_ = re.compile('star-rating'))
-
-        l = [grade, name, ascents, ratio]
-        p.add_row(l)
-        f.write(",".join(l) + '\n')
-
-    print(p)
-
-    for a in soup.find_all(href = re.compile('page')):
-        if (a.text == "NEXT"):
-           link = front + a['href'].strip() 
-           process_entry(link, page_num+1)
-           return 
-    return
-
-    
-
-def process_table(URL):
-    page = requests.get(URL)
-    soup = bs(page.content, 'html.parser')
-    tag = soup.tbody
-    entries = tag.find_all('tr')
-
-    for entry in entries:
-        col_name = entry.find(class_ = 'col-name')
-        name_link = col_name.find(class_ = 'name-link')
-        crag_name = name_link.a.text.strip()
-        f.write(crag_name + '\n')
-        print(color_text(crag_name + ":", [255, 100, 255]))
-        crag_link = front + name_link.a['href']
-        boulders = crag_link[:-5] + 'bouldering'
-        process_entry(boulders)
-        print()
-
-    for a in soup.find_all(href = re.compile('page')):
-        if (a.text == "NEXT"):
-           link = front + a['href'].strip() 
-           return link
-    return None
-
-
-link = front + '/areas'
-while link is not None:
-    link = process_table(link) 
-
-for a in soup.find_all(href = re.compile('page')):
-    if (a.text == "NEXT"):
-       link = front + '8a.nu' + a['href'].strip() 
-       print(link)
-       p = requests.get(link)
-       print(p)
-
-f.close()
-'''
-
-
-front ='https://www.8a.nu' 
-
-def process_crag(info): #URL, crag_data):
+def process_crag(info): 
     URL = info[0]
     crag_name = info[1] 
     crag_data = {}
@@ -268,4 +185,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    pass
